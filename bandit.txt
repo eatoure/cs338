@@ -1,0 +1,127 @@
+1. This focument contains the some notes I wrote, alongside responses and code(including passwords)
+2. By Elhadji Amadou Touré for Computer Security & COMPS, Fall 2024, Carleton College
+3. Status Update: Currently working on Level #5
+4. Disclaimer: To ease the redaction of this document, generative AI was utilized (although not to solve any of the problems)
+
+
+### Level 0: Logging into the Server
+
+**Objective**: I needed to log into the server using SSH on a specific port.
+
+**Steps**:
+1. I used the following SSH command to log into the server:
+   ```bash
+   ssh -p 2222 bandit0@bandit.labs.overthewire.org
+   ```
+2. After entering the command, I was prompted for a password, which I entered (even though it didn’t show on the screen).
+
+**Lessons Learned**:
+- I learned how to specify a port number using the `-p` flag in the SSH command.
+- I confirmed that SSH does not display passwords as they are typed for security reasons.
+
+---
+
+### Level 1: Finding the Password in the `readme` File
+
+**Objective**: I needed to find the password for the next level, which was mentioned to be in a file named `readme` in the home directory.
+
+**Steps**:
+1. I listed the files in the directory using the command:
+   ```bash
+   ls
+   ```
+   This command returned the file `readme`.
+2. I read the contents of the `readme` file using:
+   ```bash
+   cat readme
+   ```
+3. Inside the file, I found the password: `ZjLjTmM6FvvyRnrb2rfNWOZOTa6ip5If`.
+
+**Lessons Learned**:
+- I learned how to navigate and read files in the command line using `ls` and `cat`.
+- I retrieved the password needed for the next level from the `readme` file.
+
+---
+
+### Level 2: Accessing the Password from a File with Spaces in the Name
+
+**Objective**: I needed to find the password for the next level, which was stored in a file with spaces in its name.
+
+**Steps**:
+1. I listed the files in the home directory using:
+   ```bash
+   ls
+   ```
+   The command returned a file named `spaces in this filename`.
+   
+2. To view the contents of the file, I used quotes around the file name to account for the spaces:
+   ```bash
+   cat "spaces in this filename"
+   ```
+   
+3. This revealed the password for the next level: `MNk8KNH3Usiio41PRUEoDFPqfxLPlSmx`.
+
+**Lessons Learned**:
+- I learned how to handle file names with spaces by wrapping them in quotes when using commands like `cat`.
+
+---
+
+### Level 3: Accessing the Password Hidden in a Directory
+
+**Objective**: I needed to find the password for the next level, which was hidden in a directory.
+
+**Steps**:
+1. I listed all files and directories, including hidden ones, using:
+   ```bash
+   ls -a
+   ```
+   This revealed a directory named `inhere`.
+
+2. I attempted to read the directory using `cat`, but I received an error:
+   ```bash
+   cat inhere
+   ```
+   The response was: `cat: inhere: Is a directory`.
+
+3. I navigated into the `inhere` directory:
+   ```bash
+   cd inhere
+   ```
+
+4. Inside, I used `ls -a` to list hidden files, which revealed a file named `...Hiding-From-You`.
+
+5. I then read the contents of this hidden file using:
+   ```bash
+   cat ...Hiding-From-You
+   ```
+
+6. This revealed the password for the next level: `2WmrDFRmJIq3IPxneAaMGhap0pFhF3NJ`.
+
+**Lessons Learned**:
+- I learned how to list hidden files and directories using the `-a` option with `ls`.
+- I confirmed that files with unusual names (e.g., those starting with `.` or containing multiple dots) can be accessed by specifying the exact file name.
+
+---
+
+### Level 4: Finding the Password Among Multiple Files
+
+**Objective**: I needed to find the password for the next level, which was stored in one of several files.
+
+**Steps**:
+1. I listed the files in the `inhere` directory using:
+   ```bash
+   ls
+   ```
+   The command returned several files with names like `-file00`, `-file01`, and so on.
+
+2. To check the non-executable files, I used the `find` command with the `! -executable` option:
+   ```bash
+   find . ! -executable
+   ```
+   This returned the list of all files in the directory.
+
+3. I manually checked each file by using `cat` to read its contents. In file `-file07`, I found the password: `4oQYVPkxZOOEOO5pTW81FB8j8lxXGUQw`.
+
+**Lessons Learned**:
+- I practiced using `find` to list files that are not executable.
+- I realized that manually reading through files isn’t always the most efficient approach, and using commands like `grep` could speed up the process in future levels.
