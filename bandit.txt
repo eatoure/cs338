@@ -125,3 +125,246 @@
 **Lessons Learned**:
 - I practiced using `find` to list files that are not executable.
 - I realized that manually reading through files isn’t always the most efficient approach, and using commands like `grep` could speed up the process in future levels.
+
+---
+
+### Level 5: Finding a Readable Non-Executable File with Specific Size
+
+**Objective**: I needed to find a readable, non-executable file that was exactly 1033 bytes in size.
+
+**Steps**:
+1. I listed the files in the `inhere` directory using:
+   ```bash
+   ls
+   ```
+   This revealed a directory named `inhere`.
+
+2. I navigated into the `inhere` directory:
+   ```bash
+   cd inhere
+   ```
+
+3. I used the `find` command to locate a file that matched the criteria:
+   ```bash
+   find . -type f -readable ! -executable -size 1033c
+   ```
+   This command returned `./maybehere07/.file2`.
+
+4. I navigated into the `maybehere07` directory and attempted to read the file. Initially, I made a typo and tried reading a non-existent file:
+   ```bash
+   cat ./.fille2
+   ```
+   This returned the error:
+   ```
+   cat: ./.fille2: No such file or directory
+   ```
+
+5. After correcting the command, I successfully read the file:
+   ```bash
+   cat .file2
+   ```
+   This revealed the password for the next level: `HWasnPhtq9AVKe0dmk45nxy20cvUa6EG`.
+
+**Lessons Learned**:
+- I learned how to use `find` with specific flags like `-size` to search for files based on their size.
+- I confirmed the importance of double-checking filenames when using `cat`.
+
+---
+
+### Level 6: Finding a File by User, Group, and Size
+
+**Objective**: I needed to find a file owned by user `bandit7`, group `bandit6`, and exactly 33 bytes in size.
+
+**Steps**:
+1. I listed the files in the current directory using:
+   ```bash
+   ls
+   ```
+   This did not show any relevant files.
+
+2. I used `ls -a` to list hidden files, but there was still nothing of interest:
+   ```bash
+   ls -a
+   ```
+   This only returned the usual hidden files like `.bashrc` and `.profile`.
+
+3. I used the `find` command to search the entire filesystem for a file owned by user `bandit7`, group `bandit6`, and with a size of 33 bytes:
+   ```bash
+   find / -user bandit7 -group bandit6 -size 33c 2>/dev/null
+   ```
+   This command found the file `/var/lib/dpkg/info/bandit7.password`.
+
+4. I read the contents of the file using:
+   ```bash
+   cat /var/lib/dpkg/info/bandit7.password
+   ```
+   This revealed the password for the next level: `morbNTDkSW6jIlUc0ymOdMaLnOlFVAaj`.
+
+**Lessons Learned**:
+- I practiced using `find` with multiple criteria (`-user`, `-group`, and `-size`).
+- I learned how to suppress error messages in `find` using `2>/dev/null`.
+
+---
+
+### Level 7: Finding a Specific String in a File
+
+**Objective**: I needed to find a line in the file `data.txt` that contained the string "millionth".
+
+**Steps**:
+1. I used the `grep` command to search for the string "millionth" in the file `data.txt`:
+   ```bash
+   grep "millionth" data.txt
+   ```
+
+2. This command returned the following line:
+   ```
+   millionth  dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc
+   ```
+
+3. The second part of the line, `dfwvzFQi4mU0wfNbFOe9RoWskMLg7eEc`, was the password for the next level.
+
+**Lessons Learned**:
+- I practiced using `grep` to search for specific patterns in a file.
+- I confirmed that `grep` is a quick way to locate specific information in a large file.
+
+---
+
+### Level 8: Finding the Unique Line in the File
+
+**Objective**: I needed to find a line in the file `data.txt` that was unique.
+
+**Steps**:
+1. I sorted the file `data.txt` and then used `uniq` to find the unique lines with the `-u` option:
+   ```bash
+   sort data.txt | uniq -u
+   ```
+
+2. This command returned the following line:
+   ```
+   4CKMh1JI91bUIZZPXDqGanal4xvAg0JM
+   ```
+
+3. This unique line was the password for the next level.
+
+**Lessons Learned**:
+- I practiced using `sort` and `uniq` together to find unique lines in a file.
+- Sorting the file before using `uniq` ensures that repeated lines are grouped together, making it easier to identify the unique line.
+
+---
+
+### Level 9: Extracting a Hidden Password from a Binary File
+
+**Objective**: I needed to extract a hidden password from a binary file, which was marked by the string "====".
+
+**Steps**:
+1. I used the `strings` command to extract readable characters from the file `data.txt`, then piped it to `grep` to search for lines containing "====":
+   ```bash
+   strings data.txt | grep "===="
+   ```
+
+2. This command returned the following lines:
+   ```
+   \a!;========== the
+   ========== passwordf
+   ========== isc
+   ========== FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey
+   ```
+
+3. The final line, `FGUW5ilLVJrxX9kMYMmlN4MgbpfMiqey`, was the password for the next level.
+
+**Lessons Learned**:
+- I learned how to use `strings` to extract readable text from a binary file.
+- I combined `strings` with `grep` to filter the output and locate the specific string pattern I was searching for.
+
+---
+
+### Level 10: Decoding Base64 Encoded Data
+
+**Objective**: I needed to decode Base64-encoded data stored in the file `data.txt`.
+
+**Steps**:
+1. I used the `base64` command with the `-d` option to decode the contents of `data.txt`:
+   ```bash
+   base64 -d data.txt
+   ```
+
+2. This command returned the following output:
+   ```
+   The password is dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr
+   ```
+
+3. The decoded password was `dtR173fZKb0RRsDFSGsg2RWnpNVj3qRr`.
+
+**Lessons Learned**:
+- I learned how to decode Base64-encoded data using the `base64 -d` command.
+
+---
+
+### Level 11: Decoding ROT13 Encoded Data
+
+**Objective**: I needed to decode a file that was encoded using ROT13.
+
+**Steps**:
+1. I used the `tr` (translate) command to decode the contents of `data.txt` by shifting the letters using ROT13:
+   ```bash
+   cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+   ```
+
+2. This command returned the following output:
+   ```
+   The password is 7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4
+   ```
+
+3. The decoded password was `7x16WNeHIi5YkIhWsfFIqoognUTyj9Q4`.
+
+**Lessons Learned**:
+- I practiced using the `tr` command to perform a ROT13 decoding.
+- I confirmed that ROT13 shifts letters by 13 positions in the alphabet.
+
+---
+
+### Level 12: Extracting Data from Multiple Compressions
+
+**Objective**: I needed to extract data hidden in multiple layers of compressed files.
+
+**Steps**:
+1. I created a temporary directory and copied the `data.txt` file there:
+   ```bash
+   mkdir /tmp/mydirtoure
+   cp data.txt /tmp/mydirtoure
+   cd /tmp/mydirtoure
+   ```
+
+2. I converted the file from hexadecimal using `xxd`:
+   ```bash
+   xxd -r data.txt > new
+   ```
+
+3. I identified the file type using the `file` command:
+   ```bash
+   file new
+   ```
+
+   It was identified as `gzip compressed data`, so I renamed it to `new.gz` and decompressed it:
+   ```bash
+   mv new new.gz
+   gunzip new.gz
+   ```
+
+4. I repeated the process, decompressing bzip2, tar, and gzip formats multiple times:
+   ```bash
+   file new
+   bunzip2 new
+   tar -xf new
+   ```
+
+5. Finally, I extracted the password from the last file:
+   ```bash
+   cat data8
+   ```
+
+   This revealed the password: `FO5dwFsc0cbaIiH0h8J2eUks2vdTDwAn`.
+
+**Lessons Learned**:
+- I learned how to deal with multiple layers of compressed files using `gzip`, `bzip2`, and `tar`.
+- I understood the importance of checking file types with `file` before proceeding with decompression or extraction.
