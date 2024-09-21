@@ -1,0 +1,43 @@
+wireshark.txt
+Author: Elhadji Amadou Touré '25
+CS 338: Computer Security; Fall 2024; Carleton College
+Created 09/21/2024
+Last Modified 09/21/2024
+
+===== DAYTIME =====
+	Q1: Identify the parts of the TCP 3-way handshake by listing the frame summaries of the relevant frames.
+1 192.168.65.4 132.163.96.6 TCP [SYN] Seq=0 Win=32120 Len=0 MSS=1460
+2 132.163.96.6 192.168.65.4 TCP [ACK] Seq=0 Ack=1 Win=65535 Len=0
+3 192.168.65.4 132.163.96.6 TCP [ACK] Seq=1 Ack=1 Win=32128 Len=0
+	
+	Q2: What port number does the client (i.e. nc on your Kali computer) use for this interaction?
+The client is using port 59058 (Frame 1).
+	
+	Q3: Why does the client need a port?
+In order to ID the communication endpoint on its side.
+
+	Q4: What frame contains the actual date and time?
+Frame #4
+4 132.163.96.6 192.168.65.4 DAYTIME DAYTIME Response
+
+	Q5: What do [SYN] and [ACK] mean?
+[SYN] and [ACK] stand for "synchronize" and "acknowledge", respectively. [SYN] is used to initiate a TCP connection and essentially lets the receiver know that the sender wants start a new connection, while [ACK] is used to acknowledge the receipt of a package / message
+
+	Q6: Which entity (the nc client or the daytime server) initiated the closing of the TCP connection? How can you tell?
+The daytime server initiated the ending. Looking at the frames, after the time is sent (Frame 4) a [FIN, ACK] is sent next coming from the daytime server. That is then acknowledge by the client, which then sends another [FIN, ACK] acknowledged by the server, and the communication ends.
+
+===== DAYTIME =====
+	Q1: How many TCP connections were opened? How can you tell?
+I considered each handshake to be a TCP connection. Therefore, I would say that 2 TCP connections were opened (very likely to be 1, though, since the second one has a PSH which apparently means to pass data without waiting to fill the buffer with more data). Another way to know that two TCP connections were opened is to look at the number of FINs, which indicate the TCP connection closure. Seeing 4, we know that we have two TCPs since each TCP requires 2 FINs (one from the client and one from the server).
+
+	Q2: Can you tell where my homepage (index.html) was requested? (If not, why not? If so, include frame summaries and/or other info that supports your answer.)
+It seems to have been requested on frame 4 which comes from the client to the server with a GET request
+4 192.168.65.4 172.233.221.124 HTTP 409 GET/index.html HTTP/1.1
+
+	Q3: Can you tell where my photograph (jeff-square-colorado.jpg) was requested? (If not, why not? If so, include frame summaries and/or other info that supports your answer.)
+It seems to have been requested on frame 8 which comes from the client to the server with a GET request
+8 192.168.65.4 172.233.221.124 HTTP 382 GET /jeff-square-colorado.jpg HTTP/1.1
+
+
+===== QUESTIONS =====
+1. Would appreciate it if you could talk to us more about what PSH exactly does? And why are there SO MANY frames?!?!

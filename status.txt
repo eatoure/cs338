@@ -1,5 +1,7 @@
+status.txt
 Author: Elhadji Amadou Touré
 CS 338: Computer Security; Fall 2024; Carleton College
 Created 09/15/2024
+Last Modified 09/21/2023
 
-Plan for using Kali and status: UTM has been downloaded and fully set up alongside Kali Linux (however, the screen is stuck at "Display output is not active"). I will be using it on my own M1 Mac for the most part (not a big fan of the Macs in Olin 310).
+Plan for using Kali and status: UTM has been downloaded and fully set up alongside Kali Linux. I will be using it on my own M1 Mac for the most part (not a big fan of the Macs in Olin 310).
