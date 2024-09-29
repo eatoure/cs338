@@ -15,3 +15,18 @@ for num in array:
     newArray.append(m)
     
 print(newArray)
+
+# Convert each integer to its hexadecimal equivalent and filter out invalid ASCII characters
+ascii_chars = []
+for num in newArray:
+    hex_value = hex(num)[2:]  # Convert to hex and strip the '0x' prefix
+    try:
+        ascii_rep = bytes.fromhex(hex_value).decode('ascii')  # Attempt to decode as ASCII
+        ascii_chars.append(ascii_rep)
+    except (ValueError, UnicodeDecodeError):
+        ascii_chars.append(f"Invalid ASCII for {hex_value}")
+
+print(ascii_chars)
+
+# "Dear Bob, check this out. 
+# https://www.surveillancewatch.io/ See ya, Alice."

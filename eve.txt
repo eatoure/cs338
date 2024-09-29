@@ -98,7 +98,22 @@ for num in array:
 print(newArray)
 
 
-This gave a series of integers: [17509, 24946, 8258, 28514, 11296, 25448, 25955, 27424, 29800, 26995, 8303, 30068, 11808, 26740, 29808, 29498, 12079, 30583, 30510, 29557, 29302, 25961, 27756, 24942, 25445, 30561, 29795, 26670, 26991, 12064, 21349, 25888, 31073, 11296, 16748, 26979, 25902]. They did not convert to anything using ASCII.
+This gave a series of integers: [17509, 24946, 8258, 28514, 11296, 25448, 25955, 27424, 29800, 26995, 8303, 30068, 11808, 26740, 29808, 29498, 12079, 30583, 30510, 29557, 29302, 25961, 27756, 24942, 25445, 30561, 29795, 26670, 26991, 12064, 21349, 25888, 31073, 11296, 16748, 26979, 25902]. Then, I proceeded to convert these numbers to ASCII by first converting them to Hex. See the python below.
+
+Python script:
+# Convert each integer to its hexadecimal equivalent and filter out invalid ASCII characters
+ascii_chars = []
+for num in newArray:
+    hex_value = hex(num)[2:]  # Convert to hex and strip the '0x' prefix
+    try:
+        ascii_rep = bytes.fromhex(hex_value).decode('ascii')  # Attempt to decode as ASCII
+        ascii_chars.append(ascii_rep)
+    except (ValueError, UnicodeDecodeError):
+        ascii_chars.append(f"Invalid ASCII for {hex_value}")
+
+print(ascii_chars)
+
+This eventually reads: "Dear Bob, check this out. https://www.surveillancewatch.io/ See ya, Alice."
 
 
 - Point of Failure with Much Larger Integers:
