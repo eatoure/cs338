@@ -54,7 +54,7 @@ Therefore, the shared secret K = 65
 
 To decipher the encrypted message sent from Alice to Bob and fully grasp the situation, we'll break down the process into key components:
 
-	- Alice encoding: Both Alice and Bob generate their public-private key pairs. Alice’s message is encrypted using Bob's public key, which consists of two numbers: e_Bob and n_Bob. Bob’s private key is necessary for decryption. Alice encrypts her message using Bob’s public key. If the message M is transformed into a number smaller than n, it becomes C = M^e_Bob % n_Bob.
+	- Alice encoding: Alice encoded the message using hex. She proceeded to encrypt that encoded text. Both Alice and Bob generate their public-private key pairs. Alice’s message is encrypted using Bob's public key, which consists of two numbers: e_Bob and n_Bob. Bob’s private key is necessary for decryption. Alice encrypts her message using Bob’s public key. If the message M is transformed into a number smaller than n, it becomes C = M^e_Bob % n_Bob.
 
 - Here is what we know:
 	- Bob's public key: ((e, n) = (13, 162991))
@@ -122,6 +122,7 @@ The critical point of failure in our RSA decryption process would occur during t
    
 
 - Insecurity of Alice's Encoding Method (even in cases where Bob had higher numbers):
-	1. If Alice's encoding doesn't include proper padding, RSA encryption can be vulnerable to attacks.
-	2. If the attacker knows or can guess parts of the plaintext, they might be able to find other encrypted messages or even the decryption key itself.
-	3. If the encoding results in a predictable pattern or repeated chunks of data, these patterns could be exploited to break the encryption (similar to #1).
+	1. Alice encoded the message using hex, which really isn't that safe. It's pretty basic and individuals (including myself) could guess that this occured.
+	2. If Alice's encoding doesn't include proper padding, RSA encryption can be vulnerable to attacks.
+	3. If the attacker knows or can guess parts of the plaintext, they might be able to find other encrypted messages or even the decryption key itself.
+	4. If the encoding results in a predictable pattern or repeated chunks of data, these patterns could be exploited to break the encryption (similar to #1).
