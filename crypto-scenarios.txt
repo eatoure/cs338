@@ -1,0 +1,68 @@
+key-formats.txt
+Author: Elhadji Amadou Touré '25
+CS 338: Computer Security; Fall 2024; Carleton College
+Created 10/06/2024
+Last Modified 10/06/2024
+
+
+==== Simple Communication Scenarios ====
+
+1. Alice wants to send Bob a long message, and she doesn't want Eve to be able to read it. Assume for this scenario that AITM is impossible.
+
+Plan:
+	- Alice and Bob can use Diffie-Hellman (DH) key exchange to agree on a shared secret. From this shared secret, they derive an AES encryption key K.
+	- Alice encrypts the long message using AES and sends it to Bob.
+	- Bob decrypts the message using the same shared key K derived from DH.
+
+
+2. Alice wants to send Bob a long message. She doesn't want Mal to be able to modify the message without Bob detecting the change.
+
+Plan:
+	- Alice hashes the message using SHA-256 to produce H(M).
+	- Alice encrypts the message and the hash using an AES key K.
+	- Alice sends the ciphertext to Bob.
+	- Bob decrypts to retrieve M.
+	- Bob computes H(M) again on the received message and compares it with the decrypted hash.
+
+
+
+3. Alice wants to send Bob a long message (a signed contract), she doesn't want Eve to be able to read it, and she wants Bob to have confidence that it was Alice who sent the message. Assume AITM is impossible.
+
+Plan:
+	- Alice and Bob use Diffie-Hellman to derive a shared AES key K.
+	- Alice hashes the message using SHA-256: H(M).
+	- Alice signs the hash with her private key to create a signature.
+	- Alice encrypts the message and the signature with AES.
+	- Alice sends the ciphered version to Bob.
+	- Bob decrypts it using the AES key to retrieve the message.
+	- Bob verifies the signature by computing H(M) and checking.
+
+
+==== Questions about Breaking Security ====
+
+4. Alice repudiates the contract in court, saying "C is not the contract I sent to Bob." List three things Alice could claim happened and assess their plausibility.
+
+	- 1: Forgery as Alice could very easily say that someone forged her digital signature by somehow gaining access to her private key. Sure, this is unlikely, but possible, if Alice’s private key was compromised.
+
+	- 2: The public key that Bob used was not hers, which is something else Alice could argue. Bob used an incorrect public key during verification, meaning the signed contract is not valid. This is actually somewhat plausible if the key distribution method is insecure or compromised (MITM).
+
+	- 3: The document was altered after signing is something else she could say. Bob modified the document after she signed it, but kept the original signature. This, however, is actually implausible, because the signature is tied to the hash of the message. Any modification to the document would result in a different hash that would make her signature invalid.
+
+
+5. Show the formula CA would use to compute Sig_CA
+
+	- SigCA = E(SSA, H("bob.com"||PB))
+
+
+6 Is Cert_B Enough to Convince Alice?
+
+No, as Cert_B only proves that the CA verified Bob's public key, but it doesn't prove that the person Alice is communicating with possesses the corresponding private key. They would probably need to do something like what CAs do to authenticate the legitimacy of Bob in the examples we covered. As follows:
+	- Alice sends Bob a random challenge message.
+	- Bob encrypts the challenge with his private key and sends the result to Alice.
+	- Alice decrypts it using Bob's public key. If the result matches her original challenge, Alice can be confident that Bob has the corresponding private key.
+
+==== Two Ways to Subvert the Certificate-based Trust System ====
+
+	1. Mal could technically impersonate Bob by subverting the CA: This could happen if Mal can trick the CA into issuing a certificate with Mal's public key under Bob’s identity (very difficult, sure, but possible). Alice might believe she is communicating with Bob when she is actually talking to Mal. 
+
+	2. The CA could have their private key compromised: If Mal gains access to the CA’s private key, they could forge certificates for any domain or public key. Mal could then generate a valid certificate for themselves as if they were Bob, and Alice would have no way to detect the fraud whatsoever.
