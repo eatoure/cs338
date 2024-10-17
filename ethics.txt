@@ -1,0 +1,74 @@
+ethics.txt
+Author: Elhadji Amadou Touré '25
+CS 338: Computer Security; Fall 2024; Carleton College
+Created 10/16/2024
+Last Modified 10/16/2024
+
+Currently working with scenario #2.
+
+======== MAIN ETHICAL QUESTIONS ========
+
+Working with this scenario (which I find rather interesting), the main ethical question certainly revolves around finding the perfect balance / sweet spot between user privacy and potential financial gains through the sale of anonymized location data. Adding more specificity here, we could see the following questions arise:
+
+	1. Should I allow the company to store and sell user location data, which technically violates the original ethical promise to protect user privacy?
+		1.1. Does this even count as violating user privacy if the data is anonymized?
+
+	2. How should I respond to the CEO's desire to delay scrubbing the data in favor of monetizing it? After all, this is a business with a primary goal of doing what businesses do: make money!
+
+	3. More interestingly, what responsibilities do I have, as a SWE, to maintain trust and also uphold ethical commitments, even if it goes against company interests?
+
+
+I do believe that these questions cover the entire tension between commercial success and ethical duty, especially when one is thinking about the terms of user privacy and data protection.
+
+======== STAKEHOLDER RIGHTS ========
+
+	1. Users:
+		1.1.: Their Right to Privacy: Using this app, every individual immediately has an "inherent" right to expect that their personal information is handled not only with care but is also only used for the stated purposes on the T&C. Looking at the script, they were also promised that the data would be discarded immediately following use.
+		1.2: Users also technically have the right to transparency when it comes to what data is being collected, how it is stored, and how it is used.
+
+	2. Beerz Company:
+		2.1.: The company technically has a right, and somewhat of a duty, to seek new venues of growth. That includes generating revenue from anonymized data, in my point of view, so as long as it doesn't violate any legal or ethical boundary.
+		2.2.: The company also has the right to have a vested interest in maintaining the trust of all of its users. The goal of the company is to make money, sure, but violating this commitment to privacy can actually harm its reputation and long-term success, defeating the whole purpose.
+
+	3. Me:
+		3.1.: As not only a professional but an arguably ethical human being, I have both the personal and professional right to work in an environment that aligns with my values; and, if I were attracted to the company because of its ethical stance, any potential deviation from it could force me to consider my role, rightfully so.
+		3.2.: I also have the responsibility of implementing features that involve user data, and I have a right to clear guidelines on what is expected and whether the company plans to adhere to its own privacy promises.
+
+======== MISSING INFORMATION ========
+
+Thinking a bit further about missing information that could influence the decision, I came up with a few:
+
+	1. Are there specific data protection laws (such as GDPR) that regulate how long user data can be stored or whether it can be sold, even in anonymized form? I'm not too sure.
+	2. How robust is the process for anonymizing location data? Is it truly possible to anonymize location data in a way that prevents users from being re-identified? What if a specific group is known to use this app? Could it be much easier for maleficent individuals to target this specific group?
+	3. Does the CEO understand the potential risks involved in monetizing user data, including privacy violations and reputational damage? Has he gotten a debrief/does he have any idea about the implications of what he is approving beyond a financial scope?
+	4. What does the existing user agreement say about data collection and storage? Is there a clause that users might interpret as a betrayal if the company begins selling their location data?
+
+======== POSSIBLE ACTIONS AND CONSEQUENCES ========
+
+There are a couple of ways this could go. This is, however, not an exhaustive list.
+
+	1. We could follow the CEO's directive to retain location data and explore selling it. This would allow the company to generate significant revenue by selling anonymized data to third parties (hypothetically); however, users may feel betrayed if they end up discovering that their data, which they expect to be discarded, is being monetized (ehem, FaceBook). Also, if the company simply does not properly anonymize the data or violates data protection laws, we could face serious legal consequences that will undermine the company's reputation, leading to a loss of user trust and potential business loss.
+
+	2. We could advocate against the CEO's plan and rather push for data scrubbing. This would uphold the company's commitment to privacy and would reinforce our ethical promise. Sure, the company may miss out on the additional revenue from selling data, and it might lead to a conflict with the CEO and other executives, but the company would also avoid potential lawsuits and penalties by following data protection regulations.
+
+	3. I can also see a middle-ground proposal taking the upper hand. We could propose anonymizing the data in a way that minimizes privacy risks while still allowing some form of aggregated data to be monetized. This might not fully satisfy the CEO's goals or user privacy concerns, sure. And further, implementing a truly, truly anonymized solution may actually be quite technically difficult.
+
+======== ACM CODE OF ETHICS ========
+
+Taking the code of ethics into consideration, I decided to add the following to my thought process:
+
+	1. We want to make sure to avoid harm to others.
+	2. We want to respect privacy.
+	3. We want to give comprehensive and thorough evaluations of computer systems and their impacts, including analysis of possible risks.
+
+======== ACTION TO TAKE ========
+
+Everything taken into account, I would actually recommend advocating against the CEO's plan to delay data scrubbing and sell anonymized location data FOR NOW. The reasons are as follows:
+
+	1. This aligns with the company's original commitment to privacy and the ethical principle of "do no harm."
+	2. While this may result in missing out on some sort of short-term financial gain, protecting user privacy will build long-term trust and help our company establish a strong reputation in an already competitive market, which might actually bring more customers. We might need to hire a market analyst to tell us more about this.
+
+Further, to address these financial concerns, we could propose exploring alternative ways to generate revenue without compromising user privacy. Which exactly, I'm unsure of; however, a special idea would be to actually allow some of our users to volunteer their unanonymized data in one of two ways:
+
+	1. We could simply ask them to opt in, and we will anonymize their data as much as possible while still retaining the information needed for the company to make a profit off of it; however, this would be advertised to the users as a method to better the app experience (which is less of a deception). Users may refuse to opt-out.
+	2. An even (potentially) better option is to extend the idea above and actually reward users who do volunteer to share their data. The company, in fact, could utilize a part of the benefit made from this new model to provide coupon codes or gift cards for volunteers to utilize at their favorite brewery. Hence, the users only provide data when they want to, the company makes a profit, the app experience is considerably better, and both the company and users win, although the net, pure financial gains would not be as huge for the company anymore.
