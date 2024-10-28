@@ -1,0 +1,40 @@
+xss.txt
+Author: Elhadji Amadou Touré '25
+CS 338: Computer Security; Fall 2024; Carleton College
+Created 10/26/2024
+Last Modified 10/27/2024
+
+========= COOKIES =========
+a. There is a cookie that up, specifically a theme cookie with value 'default', domain 'cs338.jeffondich.com', path '/', which is set to expire in a little less than a year and with a size of 12B.
+
+b. Yes, the value changed to blue and the size actually decreased (I changed it to blue).
+
+c. In BurpSuite, I saw Cookie: theme=red in the HTTP request header when the theme was set to red. The server responded with a Set-Cookie: theme=red header to update the theme preference. The values matched those seen in the browser’s Inspector.
+
+d. Yes, my selected theme (red or blue) persisted after relaunching the browser, which pretty much means the theme preference is stored in a persistent cookie that remains even after closing and reopening the browser.
+
+e. Effectively what's going on is that the current theme is transmitted through a cookie. Each time the browser sends a request to cs338.jeffondich.com, it includes the theme cookie in the Cookie: header, letting the server know which theme to use.
+
+f. When I change the theme, the server responds with a Set-Cookie: header that updates the theme cookie’s value to the new selection (e.g., Set-Cookie: theme=blue). This pretty much tells the browser to store the updated theme preference.
+
+g. I could go to the browser's Inspector, navigate to the "Application" tab, find the theme cookie, and manually change its value to red or blue. After refreshing the page, the new theme would apply.
+
+h. Using BurpSuite’s Proxy tool, I can intercept the HTTP request that contains the theme cookie. By modifying the theme value in the Cookie: header (e.g., changing it to theme=blue) before forwarding the request, I can apply the theme I want.
+
+i. On my macOS: ~/Library/Application Support/Google/Chrome/Default/Cookies for Chrome. On Linux, it was in ~/.config/google-chrome/Default/Cookies for Chrome
+
+========= CROSS-SITE SCRIPTING (XSS) =========
+
+
+a. Step-by-step Analysis of Moriarty's Attack
+Moriarty's posts contain embedded JavaScript in the post body, specifically <script>alert('Mwah-ha-ha-ha!');</script>. This is a form of Cross-Site Scripting (XSS) attack where the script runs in the browser of any user who views the post. When a user clicks on the post, their browser executes the JavaScript code, which triggers an alert with the message 'Mwah-ha-ha-ha!'. In terms of more specific timing, first, Moriarty creates a post with embedded JavaScript. Then, the post is stored on the server with the raw JavaScript included in its content. Following, 
+when another user (e.g., Alice) clicks on Moriarty's post to view it, the raw JavaScript is sent as part of the HTML page. Penultimately, Alice’s browser interprets the JavaScript in the post body and executes the script. And, finally, an alert box pops up on Alice's screen with the message Moriarty embedded.
+
+b. A More Virulent XSS Attack:
+A more dangerous version of this XSS attack could involve session hijacking. JavaScript could be written to actually access other cookies stored in Alice’s browser using document.cookie, which might include session tokens, and send it to an attacker's server. This could even allow the attacker to impersonate Alice or get information about her.
+
+
+c. Another Virulent XSS Attack:
+An alternative malicious attack could involve keylogging where the JavaScript embedded in Moriarty's post could capture keystrokes using document.addEventListener('keypress', ...). The script could then send these captured keystrokes to an external server controlled by the attacker and allow the attacker to gather sensitive information, such as usernames, passwords, etc.
+
+d. The server should figure out a way to check all user inputs, especially those that are displayed as HTML content. This means removing or escaping HTML tags like <script>, or any special characters that could be used in XSS attacks. Also, doing some digging, I found that some servers implement "Content Security Policies" to prevent the browser from executing inline scripts and only allow scripts from trusted sources. There is also a way to mark cookies as HttpOnly, which prevents them from being accessed via JavaScript, reducing the risk of session theft. For XSS, there also should be filtering methods that block suspicious scripts.
